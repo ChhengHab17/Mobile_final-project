@@ -1,0 +1,99 @@
+{
+  "stations": {
+    "s1": {
+      "name": "Balma Gramont Metro",
+      "location": "Metro Gramont",
+      "latitude": 43.6394,
+      "longitude": 1.4829,
+      "docks": {
+        "d1": { "bike": { "id": "42216", "status": "available" } },
+        "d2": { "bike": { "id": "42217", "status": "available" } },
+        "d3": { "bike": { "id": "42218", "status": "inUse" } },
+        "d4": { "bike": { "id": "42219", "status": "available" } },
+        "d5": { "bike": null },
+        "d6": { "bike": null }
+      }
+    },
+    "s2": {
+      "name": "Preaek Lieb Station",
+      "location": "Preaek Lieb",
+      "latitude": 11.5940,
+      "longitude": 104.9282,
+      "docks": {
+        "d7":  { "bike": { "id": "42220", "status": "available" } },
+        "d8":  { "bike": { "id": "42221", "status": "inUse" } },
+        "d9":  { "bike": null },
+        "d10": { "bike": { "id": "42222", "status": "available" } }
+      }
+    },
+    "s3": {
+      "name": "Khan Chroy Changvar",
+      "location": "Royal University of Fine Arts",
+      "latitude": 11.5800,
+      "longitude": 104.9350,
+      "docks": {
+        "d11": { "bike": { "id": "42223", "status": "inUse" } },
+        "d12": { "bike": { "id": "42224", "status": "inUse" } },
+        "d13": { "bike": null },
+        "d14": { "bike": null },
+        "d15": { "bike": { "id": "42225", "status": "available" } }
+      }
+    },
+    "s4": {
+      "name": "Mekong Royal Station",
+      "location": "Mekong Royal by Mekong Land",
+      "latitude": 11.5765,
+      "longitude": 104.9312,
+      "docks": {
+        "d16": { "bike": { "id": "42226", "status": "available" } },
+        "d17": { "bike": { "id": "42227", "status": "available" } },
+        "d18": { "bike": { "id": "42228", "status": "available" } },
+        "d19": { "bike": { "id": "42229", "status": "inUse" } },
+        "d20": { "bike": { "id": "42230", "status": "inUse" } },
+        "d21": { "bike": null },
+        "d22": { "bike": null },
+        "d23": { "bike": null }
+      }
+    },
+    "s5": {
+      "name": "Cambodia Academy of Digital",
+      "location": "Cambodia Academy of Digital Technology",
+      "latitude": 11.5823,
+      "longitude": 104.9298,
+      "docks": {
+        "d24": { "bike": { "id": "42231", "status": "available" } },
+        "d25": { "bike": { "id": "42232", "status": "inUse" } },
+        "d26": { "bike": { "id": "42233", "status": "inUse" } },
+        "d27": { "bike": null },
+        "d28": { "bike": null }
+      }
+    },
+    "s6": {
+      "name": "Chip Mong Land Station",
+      "location": "Chip Mong Land, Parc 6A",
+      "latitude": 11.5889,
+      "longitude": 104.9340,
+      "docks": {
+        "d29": { "bike": { "id": "42234", "status": "available" } },
+        "d30": { "bike": { "id": "42235", "status": "available" } },
+        "d31": { "bike": { "id": "42236", "status": "available" } },
+        "d32": { "bike": { "id": "42237", "status": "available" } },
+        "d33": { "bike": { "id": "42238", "status": "inUse" } },
+        "d34": { "bike": null }
+      }
+    },
+    "s7": {
+      "name": "Home Care Center",
+      "location": "Home Care, Phnom Penh",
+      "latitude": 11.5750,
+      "longitude": 104.9275,
+      "docks": {
+        "d35": { "bike": { "id": "42239", "status": "available" } },
+        "d36": { "bike": { "id": "42240", "status": "inUse" } },
+        "d37": { "bike": null },
+        "d38": { "bike": null },
+        "d39": { "bike": null }
+      }
+    }
+  }
+}
