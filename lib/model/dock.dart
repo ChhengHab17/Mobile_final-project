@@ -1,8 +1,6 @@
-import 'package:final_project/model/bike.dart';
-
 class Dock {
   final String id;
-  final Bike? bike;
+  final String? bikeId;
 
-  Dock({required this.id, this.bike});
+  Dock({required this.id, this.bikeId});
 }
