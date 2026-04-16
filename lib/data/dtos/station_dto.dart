@@ -13,7 +13,9 @@ class StationDto {
     assert(json[locationKey]  is String);
     assert(json[latitudeKey]  is double);
     assert(json[longitudeKey] is double);
-    assert(json[docksKey]     is List);
+    assert(json[docksKey]     is Map);
+
+    final docks = Map<String, dynamic>.from(json[docksKey]);
 
     return Station(
       id:        id,
@@ -21,9 +23,20 @@ class StationDto {
       location:  json[locationKey],
       latitude:  json[latitudeKey],
       longitude: json[longitudeKey],
-      docks: (json[docksKey] as List)
-          .map((d) => DockDto.fromJson(d))
-          .toList(),
+      docks: docks.entries.map((entry) =>
+        DockDto.fromJson(entry.key, Map<String, dynamic>.from(entry.value))
+      ).toList(),
     );
+  }
+  static Map<String, dynamic> toJson(Station station) {
+    return {
+      nameKey:      station.name,
+      locationKey:  station.location,
+      latitudeKey:  station.latitude,
+      longitudeKey: station.longitude,
+      docksKey: {
+        for (final dock in station.docks) dock.id: DockDto.toJson(dock)
+      },
+    };
   }
 }

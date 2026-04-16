@@ -4,12 +4,11 @@ class BikeDto {
   static const String idKey     = 'id';
   static const String statusKey = 'status';
 
-  static Bike fromJson(Map<String, dynamic> json) {
-    assert(json[idKey]     is String);
+  static Bike fromJson(String id, Map<String, dynamic> json) {
     assert(json[statusKey] is String);
 
     return Bike(
-      id:     json[idKey],     
+      id: id,
       status: BikeStatus.values.byName(json[statusKey]),
     );
   }

@@ -17,8 +17,8 @@ class StationRepositoryFirebase implements StationRepository {
       Map<String, dynamic> stationsJson = json.decode(response.body);
       List<Station> stations = [];
       
-      for (final stationJson in stationsJson.values) {
-        stations.add(StationDto.fromJson(stationJson.key, stationJson));
+      for (final stationJson in stationsJson.entries) {
+        stations.add(StationDto.fromJson(stationJson.key, stationJson.value));
       }
       return stations;
     }else{

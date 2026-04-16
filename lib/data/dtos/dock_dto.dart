@@ -4,12 +4,11 @@ class DockDto {
   static const String idKey   = 'id';
   static const String bikeKey = 'bikeId';
 
-  static Dock fromJson(Map<String, dynamic> json) {
-    assert(json[idKey] is String);
+  static Dock fromJson(String id, Map<String, dynamic> json) {
     assert(json[bikeKey] == null || json[bikeKey] is String);
 
     return Dock(
-      id:   json[idKey],
+      id:   id,
       bikeId: json[bikeKey], 
     );
   }
