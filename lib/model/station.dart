@@ -16,4 +16,5 @@
       required this.latitude,
       required this.longitude,
     });
+    int get availableBikes => docks.where((d) => d.bikeId != null).length;
   }
