@@ -1,6 +1,7 @@
 import 'package:final_project/model/station.dart';
 import 'package:final_project/ui/screens/map/view_model/map_view_model.dart';
 import 'package:final_project/ui/screens/map/widgets/station_marker.dart';
+import 'package:final_project/ui/screens/station/station_screen.dart';
 import 'package:final_project/ui/utils/asyncvalue.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
@@ -34,14 +35,22 @@ class MapContent extends StatelessWidget {
                 userAgentPackageName: "com.example.final_project",
               ),
               MarkerLayer(
-                markers: stations.data!.map((station) =>
-                  buildStationMarker(
-                    station.latitude,
-                    station.longitude,
-                    station.availableBikes,
-                    () => {},
-                  )
-                ).toList(),
+                markers: stations.data!
+                    .map(
+                      (station) => buildStationMarker(
+                        station.latitude,
+                        station.longitude,
+                        station.availableBikes,
+                        () => Navigator.push<StationScreen>(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                StationScreen(stationId: station.id),
+                          ),
+                        ),
+                      ),
+                    )
+                    .toList(),
               ),
             ],
           ),

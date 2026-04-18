@@ -6,13 +6,15 @@ class BikeTile extends StatelessWidget {
   final Dock dock;
   final VoidCallback onTap;
 
+  String get dockId => dock.id.substring(1);
+
   @override
   Widget build(BuildContext context) {
     return ListTile(
       onTap: onTap,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(14),
-        side: const BorderSide(color: Color(0xFF555555), width: 1),
+        side: const BorderSide(color: Colors.grey, width: 1),
       ),
       leading: SizedBox(
         width: 32,
@@ -24,7 +26,7 @@ class BikeTile extends StatelessWidget {
             FittedBox(
               fit: BoxFit.scaleDown,
               child: Text(
-                dock.id,
+                dockId,
                 style: const TextStyle(
                   color: Colors.white,
                   fontSize: 12,
