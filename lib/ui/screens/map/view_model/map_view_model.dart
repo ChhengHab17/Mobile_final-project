@@ -7,7 +7,7 @@ class MapViewModel extends ChangeNotifier{
   final StationRepository stationRepository;
 
   AsyncValue<List<Station>> stationsValue = AsyncValue.loading();
-  AsyncValue<Station> stationValue = AsyncValue.loading();
+  
   MapViewModel({required this.stationRepository}){
     _init();
   }
@@ -16,7 +16,7 @@ class MapViewModel extends ChangeNotifier{
     fetchStations();
   }
   
-  void fetchStations() async {
+  Future<void> fetchStations() async {
     stationsValue = AsyncValue.loading();
     notifyListeners();
 
@@ -28,16 +28,5 @@ class MapViewModel extends ChangeNotifier{
     }
     notifyListeners();
   }
-  void fetchStationById(String stationId) async {
-    stationValue = AsyncValue.loading();
-    notifyListeners();
-
-    try {
-      Station station = await stationRepository.getStationById(stationId);
-      stationValue = AsyncValue.success(station);
-    } catch (e) {
-      stationValue = AsyncValue.error(e);
-    }
-    notifyListeners();
-  }
+  
 }

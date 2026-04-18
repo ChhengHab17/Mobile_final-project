@@ -8,10 +8,10 @@
       "docks": {
         "d1": { "bikeId": "42216" },
         "d2": { "bikeId": "42217" },
-        "d3": { "bikeId": null },
+        "d3": { "bikeId": "" },
         "d4": { "bikeId": "42219" },
-        "d5": { "bikeId": null },
-        "d6": { "bikeId": null }
+        "d5": { "bikeId": "" },
+        "d6": { "bikeId": "" }
       }
     },
     "s2": {
@@ -21,8 +21,8 @@
       "longitude": 104.9282,
       "docks": {
         "d7":  { "bikeId": "42220" },
-        "d8":  { "bikeId": null },
-        "d9":  { "bikeId": null },
+        "d8":  { "bikeId": "" },
+        "d9":  { "bikeId": "" },
         "d10": { "bikeId": "42222" }
       }
     },
@@ -32,10 +32,10 @@
       "latitude": 11.5800,
       "longitude": 104.9350,
       "docks": {
-        "d11": { "bikeId": null },
-        "d12": { "bikeId": null },
-        "d13": { "bikeId": null },
-        "d14": { "bikeId": null },
+        "d11": { "bikeId": "" },
+        "d12": { "bikeId": "" },
+        "d13": { "bikeId": "" },
+        "d14": { "bikeId": "" },
         "d15": { "bikeId": "42225" }
       }
     },
@@ -48,11 +48,11 @@
         "d16": { "bikeId": "42226" },
         "d17": { "bikeId": "42227" },
         "d18": { "bikeId": "42228" },
-        "d19": { "bikeId": null },
-        "d20": { "bikeId": null },
-        "d21": { "bikeId": null },
-        "d22": { "bikeId": null },
-        "d23": { "bikeId": null }
+        "d19": { "bikeId": "" },
+        "d20": { "bikeId": "" },
+        "d21": { "bikeId": "" },
+        "d22": { "bikeId": "" },
+        "d23": { "bikeId": "" }
       }
     },
     "s5": {
@@ -62,10 +62,10 @@
       "longitude": 104.9298,
       "docks": {
         "d24": { "bikeId": "42231" },
-        "d25": { "bikeId": null },
-        "d26": { "bikeId": null },
-        "d27": { "bikeId": null },
-        "d28": { "bikeId": null }
+        "d25": { "bikeId": "" },
+        "d26": { "bikeId": "" },
+        "d27": { "bikeId": "" },
+        "d28": { "bikeId": "" }
       }
     },
     "s6": {
@@ -78,8 +78,8 @@
         "d30": { "bikeId": "42235" },
         "d31": { "bikeId": "42236" },
         "d32": { "bikeId": "42237" },
-        "d33": { "bikeId": null },
-        "d34": { "bikeId": null }
+        "d33": { "bikeId": "" },
+        "d34": { "bikeId": "" }
       }
     },
     "s7": {
@@ -89,10 +89,10 @@
       "longitude": 104.9275,
       "docks": {
         "d35": { "bikeId": "42239" },
-        "d36": { "bikeId": null },
-        "d37": { "bikeId": null },
-        "d38": { "bikeId": null },
-        "d39": { "bikeId": null }
+        "d36": { "bikeId": "" },
+        "d37": { "bikeId": "" },
+        "d38": { "bikeId": "" },
+        "d39": { "bikeId": "" }
       }
     }
   },
