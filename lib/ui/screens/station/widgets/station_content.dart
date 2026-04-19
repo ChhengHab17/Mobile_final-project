@@ -1,4 +1,5 @@
 import 'package:final_project/model/station.dart';
+import 'package:final_project/ui/screens/bike_detail/bike_detail_screen.dart';
 import 'package:final_project/ui/screens/station/view_model/station_view_model.dart';
 import 'package:final_project/ui/screens/station/widgets/bike_tile.dart';
 import 'package:final_project/ui/utils/asyncvalue.dart';
@@ -121,7 +122,14 @@ class StationContent extends StatelessWidget {
               separatorBuilder: (context, index) => const SizedBox(height: 8),
               itemCount: availableBikes,
               itemBuilder: (context, index) {
-                return BikeTile(dock: stationData.docks[index], onTap: () {});
+                return BikeTile(dock: stationData.docks[index], onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => const BikeDetailScreen(),
+                    ),
+                  );
+                });
               },
             ),
           ),
