@@ -122,5 +122,47 @@
     "42238": { "status": "inUse" },
     "42239": { "status": "available" },
     "42240": { "status": "inUse" }
-  }
+  },
+    "subscriptions": [
+      {
+        "id": "day",
+        "price": 10,
+        "currency": "USD",
+        "period": "day",
+        "planName": "Day Pass",
+        "description": "Ride unlimited for a day",
+        "features": [
+          "Unlimited rides",
+          "Valid for 24 hours"
+        ],
+        "expireDate": null
+      },
+      {
+        "id": "monthly",
+        "price": 200,
+        "currency": "USD",
+        "period": "month",
+        "planName": "Monthly Pass",
+        "description": "Unlimited rides for a month",
+        "features": [
+          "Unlimited rides",
+          "Priority support"
+        ],
+        "expireDate": "31/12/2026"
+      },
+      {
+        "id": "annual",
+        "price": 599,
+        "currency": "USD",
+        "period": "year",
+        "planName": "Annual Pass",
+        "description": "Best value for long-term use",
+        "features": [
+          "Unlimited rides",
+          "Best savings",
+          "Priority support"
+        ],
+        "expireDate": "31/12/2027"
+      }
+    ]
 }
