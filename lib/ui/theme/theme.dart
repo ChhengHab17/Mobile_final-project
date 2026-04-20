@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class AppColors {
   static const Color primary = Color(0xFFFF8C00);
-
+  static Color inactivePlanButton = Color(0xFF2F91FB);
   static Color backgroundAccent = const Color(0xFFEDEDED);
  
   static Color textPrimary = const Color(0xFF212121);

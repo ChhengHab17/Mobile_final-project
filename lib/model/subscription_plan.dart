@@ -1,3 +1,4 @@
+enum PlanButtonStyle { primary, accent, cancel }
 class SubscriptionModel {
   const SubscriptionModel({
     required this.id,
