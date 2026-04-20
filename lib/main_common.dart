@@ -1,4 +1,5 @@
 import 'package:final_project/ui/screens/map/map_screen.dart';
+import 'package:final_project/ui/screens/subscription/subscription_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -30,7 +31,7 @@ class _MyAppState extends State<MyApp> {
 
   final List<Widget> _pages = const [
     MapScreen(),
-    Center(child: Text('Subscription Screen')),
+    SubscriptionScreen(),
   ];
 
   @override
