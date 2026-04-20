@@ -126,7 +126,10 @@ class StationContent extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (_) => const BikeDetailScreen(),
+                      builder: (_) => BikeDetailScreen(
+                        station: stationData,
+                        dock: stationData.docks[index],
+                      ),
                     ),
                   );
                 });

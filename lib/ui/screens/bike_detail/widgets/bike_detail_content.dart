@@ -1,12 +1,16 @@
 import 'package:final_project/ui/screens/bike_detail/widgets/info_row.dart';
 import 'package:final_project/ui/screens/bike_detail/widgets/pass_card.dart';
+import 'package:final_project/ui/screens/bike_detail/view_model/bike_detail_view_model.dart';
 import 'package:final_project/ui/theme/theme.dart';
+import 'package:final_project/ui/utils/asyncvalue.dart';
 import 'package:final_project/ui/widgets/button.dart';
 import 'package:final_project/model/pass.dart';
 import 'package:flutter/material.dart';
 
 class BikeDetailContent extends StatelessWidget {
-  const BikeDetailContent({super.key});
+  const BikeDetailContent({super.key, required this.bikeDetailVm});
+
+  final BikeDetailViewModel bikeDetailVm;
 
   static const Pass _mockPass = Pass(
     price: 'Pay per use',
@@ -18,6 +22,31 @@ class BikeDetailContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    switch (bikeDetailVm.bikeValue.state) {
+      case AsyncValueState.loading:
+        return const Scaffold(body: Center(child: CircularProgressIndicator()));
+
+      case AsyncValueState.error:
+        return Scaffold(
+          appBar: AppBar(
+            elevation: 0,
+            scrolledUnderElevation: 0,
+            surfaceTintColor: Colors.transparent,
+            backgroundColor: AppColors.textWhite,
+            title: Text(
+              'Bike Detail',
+              style: AppTextStyles.body.copyWith(
+                fontWeight: FontWeight.w600,
+                color: AppColors.textPrimary,
+              ),
+            ),
+          ),
+          body: Center(child: Text('Error: ${bikeDetailVm.bikeValue.error}')),
+        );
+        
+      case AsyncValueState.success:
+        final bike = bikeDetailVm.currentBike;
+
     return Scaffold(
       backgroundColor: AppColors.textWhite,
       appBar: AppBar(
@@ -79,7 +108,7 @@ class BikeDetailContent extends StatelessWidget {
                                 ),
                                 const SizedBox(height: 4),
                                 Text(
-                                  'BK-001',
+                                  bike.id,
                                   style: AppTextStyles.heading.copyWith(
                                     fontSize: 28,
                                     fontWeight: FontWeight.w700,
@@ -91,16 +120,16 @@ class BikeDetailContent extends StatelessWidget {
                           ],
                         ),
                         const SizedBox(height: AppSpacings.m),
-                        const InfoRow(
+                        InfoRow(
                           icon: Icons.shield,
                           label: 'Dock Slot',
-                          value: '5',
+                          value: bikeDetailVm.dock.id,
                         ),
                         const SizedBox(height: AppSpacings.s),
-                        const InfoRow(
+                        InfoRow(
                           icon: Icons.location_on,
                           label: 'Station',
-                          value: '1',
+                          value: bikeDetailVm.station.name,
                         ),
                       ],
                     ),
@@ -146,5 +175,6 @@ class BikeDetailContent extends StatelessWidget {
         ],
       ),
     );
+    }
   }
 }
