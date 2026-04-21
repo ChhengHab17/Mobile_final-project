@@ -1,24 +1,18 @@
 import 'package:final_project/ui/screens/bike_detail/widgets/info_row.dart';
-import 'package:final_project/ui/screens/bike_detail/widgets/pass_card.dart';
+import 'package:final_project/ui/screens/bike_detail/widgets/pass_selection_view.dart';
 import 'package:final_project/ui/screens/bike_detail/view_model/bike_detail_view_model.dart';
+import 'package:final_project/ui/state/booking_state.dart';
+import 'package:final_project/ui/state/subscription_state.dart';
 import 'package:final_project/ui/theme/theme.dart';
 import 'package:final_project/ui/utils/asyncvalue.dart';
 import 'package:final_project/ui/widgets/button.dart';
-import 'package:final_project/model/pass.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class BikeDetailContent extends StatelessWidget {
   const BikeDetailContent({super.key, required this.bikeDetailVm});
 
   final BikeDetailViewModel bikeDetailVm;
-
-  static const Pass _mockPass = Pass(
-    price: 'Pay per use',
-    period: 'single',
-    planName: 'Single Ticket',
-    description: 'Use this bike once',
-    features: [],
-  );
 
   @override
   Widget build(BuildContext context) {
@@ -46,6 +40,9 @@ class BikeDetailContent extends StatelessWidget {
         
       case AsyncValueState.success:
         final bike = bikeDetailVm.currentBike;
+        final hasActivePass = context.watch<SubscriptionState>().hasActivePass;
+        final bookingState = context.watch<BookingState>();
+        final alreadyBooked = bookingState.bookedBikeId != null;
 
     return Scaffold(
       backgroundColor: AppColors.textWhite,
@@ -135,20 +132,12 @@ class BikeDetailContent extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: AppSpacings.l),
-                  Text(
-                    'Choose Pass',
-                    style: AppTextStyles.body.copyWith(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w600,
-                      color: AppColors.textPrimary,
+                  if (!alreadyBooked)
+                    PassSelectionView(
+                      onPassSelected: (planId) {
+                        bikeDetailVm.selectPlan(planId);
+                      },
                     ),
-                  ),
-                  const SizedBox(height: AppSpacings.s),
-                  PassCard(
-                    pass: _mockPass,
-                    isSelected: false,
-                    onTap: () {},
-                  ),
                 ],
               ),
             ),
@@ -164,10 +153,28 @@ class BikeDetailContent extends StatelessWidget {
             child: SizedBox(
               width: double.infinity,
               child: Button(
-                text: 'Book This Bike',
-                onPressed: () {},
+                text: alreadyBooked ? 'Already Booked a Bike' : 'Book This Bike',
+                onPressed: (alreadyBooked || (!hasActivePass && bikeDetailVm.selectedPlanId == null)) ? () {} : () async {
+                  context.read<BookingState>().bookBike(bike.id, bikeDetailVm.station.id);
+                  await showDialog(
+                    context: context,
+                    builder: (ctx) => AlertDialog(
+                      title: const Text('Success'),
+                      content: const Text('Bike booked successfully!'),
+                      actions: [
+                        TextButton(
+                          onPressed: () => Navigator.pop(ctx),
+                          child: const Text('OK'),
+                        ),
+                      ],
+                    ),
+                  );
+                  if (context.mounted) {
+                    Navigator.pop(context);
+                  }
+                },
                 color: AppColors.primary,
-                isActive: true,
+                isActive: !alreadyBooked && (hasActivePass || bikeDetailVm.selectedPlanId != null),
                 height: 52,
               ),
             ),

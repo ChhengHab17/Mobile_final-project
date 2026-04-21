@@ -3,9 +3,11 @@ import 'package:final_project/ui/screens/map/view_model/map_view_model.dart';
 import 'package:final_project/ui/screens/map/widgets/station_marker.dart';
 import 'package:final_project/ui/screens/station/station_screen.dart';
 import 'package:final_project/ui/utils/asyncvalue.dart';
+import 'package:final_project/ui/state/booking_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:provider/provider.dart';
 
 class MapContent extends StatelessWidget {
   const MapContent({super.key, required this.mapVm});
@@ -14,6 +16,7 @@ class MapContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     AsyncValue<List<Station>> stations = mapVm.stationsValue;
+    final bookingState = context.watch<BookingState>();
 
     switch (stations.state) {
       case AsyncValueState.loading:
@@ -37,18 +40,23 @@ class MapContent extends StatelessWidget {
               MarkerLayer(
                 markers: stations.data!
                     .map(
-                      (station) => buildStationMarker(
-                        station.latitude,
-                        station.longitude,
-                        station.availableBikes,
-                        () => Navigator.push<StationScreen>(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) =>
-                                StationScreen(stationId: station.id),
+                      (station) {
+                        final validDocks = station.docks.where((dock) {
+                          return dock.bikeId != null && dock.bikeId != bookingState.bookedBikeId;
+                        }).toList();
+                        return buildStationMarker(
+                          station.latitude,
+                          station.longitude,
+                          validDocks.length,
+                          () => Navigator.push<StationScreen>(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  StationScreen(stationId: station.id),
+                            ),
                           ),
-                        ),
-                      ),
+                        );
+                      }
                     )
                     .toList(),
               ),

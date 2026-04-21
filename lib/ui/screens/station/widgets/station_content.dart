@@ -3,7 +3,9 @@ import 'package:final_project/ui/screens/bike_detail/bike_detail_screen.dart';
 import 'package:final_project/ui/screens/station/view_model/station_view_model.dart';
 import 'package:final_project/ui/screens/station/widgets/bike_tile.dart';
 import 'package:final_project/ui/utils/asyncvalue.dart';
+import 'package:final_project/ui/state/booking_state.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class StationContent extends StatelessWidget {
   const StationContent({super.key, required this.stationVm});
@@ -29,8 +31,14 @@ class StationContent extends StatelessWidget {
         );
       case AsyncValueState.success:
         final Station stationData = stationVm.currentStation;
-        final int availableBikes = stationVm.availableBikes;
-        final int availableParking = stationVm.availableParking;
+        final bookingState = context.watch<BookingState>();
+        
+        final validDocks = stationData.docks.where((dock) {
+          return dock.bikeId != null && dock.bikeId != bookingState.bookedBikeId;
+        }).toList();
+
+        final int availableBikes = validDocks.length;
+        final int availableParking = stationData.docks.length - availableBikes;
 
         return Scaffold(
           backgroundColor: Colors.white,
@@ -122,13 +130,13 @@ class StationContent extends StatelessWidget {
               separatorBuilder: (context, index) => const SizedBox(height: 8),
               itemCount: availableBikes,
               itemBuilder: (context, index) {
-                return BikeTile(dock: stationData.docks[index], onTap: () {
+                return BikeTile(dock: validDocks[index], onTap: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (_) => BikeDetailScreen(
                         station: stationData,
-                        dock: stationData.docks[index],
+                        dock: validDocks[index],
                       ),
                     ),
                   );

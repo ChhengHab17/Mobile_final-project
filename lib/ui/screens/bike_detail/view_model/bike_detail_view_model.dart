@@ -11,6 +11,7 @@ class BikeDetailViewModel extends ChangeNotifier {
   final Dock dock;
 
   AsyncValue<Bike> bikeValue = AsyncValue.loading();
+  String? selectedPlanId;
 
   Bike get currentBike => bikeValue.data!;
   
@@ -41,6 +42,11 @@ class BikeDetailViewModel extends ChangeNotifier {
     } catch (e) {
       bikeValue = AsyncValue.error('Failed to load bike: $e');
     }
+    notifyListeners();
+  }
+
+  void selectPlan(String planId) {
+    selectedPlanId = planId;
     notifyListeners();
   }
 }

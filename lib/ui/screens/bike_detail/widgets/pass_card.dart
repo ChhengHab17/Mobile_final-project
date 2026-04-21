@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:final_project/model/pass.dart';
+import 'package:final_project/model/subscription_plan.dart';
 import 'package:final_project/ui/theme/theme.dart';
 
 class PassCard extends StatelessWidget {
   const PassCard({
     super.key,
-    required this.pass,
+    required this.plan,
     required this.isSelected,
     required this.onTap,
   });
 
-  final Pass pass;
+  final SubscriptionModel plan;
   final bool isSelected;
   final VoidCallback onTap;
 
@@ -24,13 +24,11 @@ class PassCard extends StatelessWidget {
           width: double.infinity,
           padding: const EdgeInsets.all(AppSpacings.m),
           decoration: BoxDecoration(
-            color: isSelected
-                ? AppColors.primary
-                : AppColors.textWhite,
+            color: AppColors.textWhite,
             borderRadius: BorderRadius.circular(AppSpacings.radius),
             border: Border.all(
               color: isSelected ? AppColors.primary : AppColors.inactive,
-              width: 1,
+              width: isSelected ? 2 : 1,
             ),
           ),
           child: Row(
@@ -41,7 +39,7 @@ class PassCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      pass.planName,
+                      plan.planName,
                       style: AppTextStyles.body.copyWith(
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
@@ -50,7 +48,7 @@ class PassCard extends StatelessWidget {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      pass.description,
+                      plan.description,
                       maxLines: 1,
                       style: AppTextStyles.label.copyWith(
                         color: AppColors.textSecondary,
@@ -61,7 +59,7 @@ class PassCard extends StatelessWidget {
               ),
               const SizedBox(width: AppSpacings.s),
               Text(
-                pass.price,
+                '\$${plan.price.toStringAsFixed(2)}',
                 textAlign: TextAlign.right,
                 style: AppTextStyles.heading.copyWith(
                   fontSize: 22,
