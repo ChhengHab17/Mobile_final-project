@@ -46,7 +46,7 @@ class SubscriptionViewModel extends ChangeNotifier {
   }
 
 //business logic
-  SubscriptionAction getAction(SubscriptionModel plan) {
+SubscriptionAction getAction(SubscriptionModel plan) {
     final active = userPassState.activePass;
 
     if (active == null) {
@@ -60,14 +60,14 @@ class SubscriptionViewModel extends ChangeNotifier {
     if (active.type == plan.type) {
       return SubscriptionAction(
         label: "CANCEL PLAN",
-        style: PlanButtonStyle.accent,
+        style: PlanButtonStyle.cancel,
         isCurrent: true,
       );
     }
 
     return SubscriptionAction(
       label: "SWITCH PLAN",
-      style: PlanButtonStyle.primary,
+      style: PlanButtonStyle.accent, 
       isCurrent: false,
     );
   }

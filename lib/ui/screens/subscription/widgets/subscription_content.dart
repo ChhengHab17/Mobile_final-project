@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../../../../model/subscription_plan.dart';
 import '../../../../ui/utils/asyncvalue.dart';
+import '../../../../ui/theme/theme.dart';
 import '../view_model/subscription_view_model.dart';
 import 'subscription_plan_card.dart';
 
@@ -17,7 +18,6 @@ class _SubscriptionContentState extends State<SubscriptionContent> {
   @override
   void initState() {
     super.initState();
-
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<SubscriptionViewModel>().loadSubscriptions();
     });
@@ -29,38 +29,50 @@ class _SubscriptionContentState extends State<SubscriptionContent> {
     final value = vm.subscriptionsValue;
 
     return Scaffold(
+      backgroundColor:
+          AppColors.textWhite, // fix: was inheriting grey scaffold bg
       body: SafeArea(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Padding(
-              padding: EdgeInsets.fromLTRB(20, 16, 20, 8),
-              child: Text(
-                "Subscriptions Plans",
-                style: TextStyle(fontSize: 22, fontWeight: FontWeight.w700),
+            // fix: centered header
+            Padding(
+              padding: const EdgeInsets.fromLTRB(
+                AppSpacings.m,
+                AppSpacings.l,
+                AppSpacings.m,
+                AppSpacings.m,
+              ),
+              child: Column(
+                children: [
+                  Text(
+                    "Subscription Plans",
+                    style: AppTextStyles.heading,
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: AppSpacings.xs),
+                  Text(
+                    "Take advantage of our annual packages starting at \$70/month and ride without limit",
+                    style: AppTextStyles.body.copyWith(
+                      color: AppColors.textSecondary,
+                      height: 1.5,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
               ),
             ),
 
-            const Padding(
-              padding: EdgeInsets.fromLTRB(20, 0, 20, 16),
-              child: Text(
-                "Take advantage of our annual packages starting at \$70/month and ride without limit",
-                style: TextStyle(fontSize: 14, color: Colors.grey, height: 1.4),
-              ),
-            ),
             Expanded(
               child: switch (value.state) {
                 AsyncValueState.loading => const Center(
                   child: CircularProgressIndicator(),
                 ),
-
                 AsyncValueState.error => Center(
                   child: ElevatedButton(
                     onPressed: vm.loadSubscriptions,
                     child: const Text("Retry"),
                   ),
                 ),
-
                 AsyncValueState.success => _buildList(vm, value.data!),
               },
             ),
@@ -72,7 +84,7 @@ class _SubscriptionContentState extends State<SubscriptionContent> {
 
   Widget _buildList(SubscriptionViewModel vm, List<SubscriptionModel> plans) {
     return ListView.builder(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
+      padding: const EdgeInsets.symmetric(horizontal: AppSpacings.m),
       itemCount: plans.length,
       itemBuilder: (context, index) {
         final plan = plans[index];

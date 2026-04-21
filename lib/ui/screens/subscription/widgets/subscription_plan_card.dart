@@ -13,7 +13,7 @@ class SubscriptionPlanCard extends StatelessWidget {
     required this.onToggle,
     required this.onButtonTap,
     required this.buttonLabel,
-    this.buttonStyle = PlanButtonStyle.primary,
+    required this.buttonStyle,
   });
 
   final SubscriptionModel plan;
@@ -54,17 +54,20 @@ class SubscriptionPlanCard extends StatelessWidget {
               period: periodText,
               isExpanded: isExpanded,
             ),
+
             if (isExpanded)
               ExpandedBody(
                 plan: plan,
                 buttonLabel: buttonLabel,
                 onButtonTap: onButtonTap,
+                buttonStyle: buttonStyle,
               )
             else
               CollapsedBody(
                 plan: plan,
                 buttonLabel: buttonLabel,
                 onButtonTap: onButtonTap,
+                buttonStyle: buttonStyle,
               ),
           ],
         ),

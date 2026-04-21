@@ -8,14 +8,26 @@ class CollapsedBody extends StatelessWidget {
     required this.plan,
     required this.buttonLabel,
     required this.onButtonTap,
+    required this.buttonStyle
   });
 
   final SubscriptionModel plan;
   final String buttonLabel;
   final VoidCallback onButtonTap;
+  final PlanButtonStyle buttonStyle;
 
   @override
   Widget build(BuildContext context) {
+    Color getButtonColor(PlanButtonStyle style) {
+      switch (style) {
+        case PlanButtonStyle.primary:
+          return AppColors.primary;
+        case PlanButtonStyle.accent:
+          return AppColors.inactivePlanButton;
+        case PlanButtonStyle.cancel:
+          return Colors.red;
+      }
+    }
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -37,7 +49,7 @@ class CollapsedBody extends StatelessWidget {
         Button(
           text: buttonLabel,
           onPressed: onButtonTap,
-          color: AppColors.primary,
+          color: getButtonColor(buttonStyle),
           isActive: true,
           width: double.infinity,
           height: 42,
