@@ -1,9 +1,9 @@
 enum PlanButtonStyle { primary, accent, cancel }
+
 class SubscriptionModel {
   const SubscriptionModel({
-    required this.id,
+    required this.type,
     required this.price,
-    required this.currency,
     required this.period,
     required this.planName,
     required this.description,
@@ -11,16 +11,15 @@ class SubscriptionModel {
     this.expireDate,
   });
 
-  final String id;
+  final String type;
   final double price;
-  final String currency;
   final String period;
   final String planName;
   final String description;
   final List<String> features;
-  final String? expireDate; 
+  final String? expireDate;
 
   @override
   String toString() =>
-      'SubscriptionModel(id: $id, planName: $planName, price: $price $currency/$period)';
+      'SubscriptionModel(id: $type, planName: $planName, price: $price \$/$period)';
 }

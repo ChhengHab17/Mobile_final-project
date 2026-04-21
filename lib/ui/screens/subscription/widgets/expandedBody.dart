@@ -3,6 +3,8 @@ import 'package:final_project/ui/theme/theme.dart';
 import 'package:final_project/ui/widgets/button.dart';
 import '../../../../model/subscription_plan.dart';
 import 'featureRow.dart';
+import '../../../state/subscription_state.dart';
+import 'package:provider/provider.dart';
 
 class ExpandedBody extends StatelessWidget {
   const ExpandedBody({
@@ -17,6 +19,14 @@ class ExpandedBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final state = context.watch<SubscriptionState>();
+    String formatDate(DateTime date) {
+      final day = date.day.toString().padLeft(2, '0');
+      final month = date.month.toString().padLeft(2, '0');
+      final year = date.year.toString().substring(2);
+
+      return "$day/$month/$year";
+    }
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -43,9 +53,10 @@ class ExpandedBody extends StatelessWidget {
           const SizedBox(height: AppSpacings.m),
         ],
 
-        if (plan.expireDate != null) ...[
+        if (state.activePass?.type == plan.type &&
+            state.expireDate != null) ...[
           Text(
-            "Expire date: ${plan.expireDate}",
+            "Expire date: ${formatDate(state.expireDate!)}",
             style: AppTextStyles.label.copyWith(
               fontSize: 12,
               color: AppColors.textSecondary,
@@ -53,6 +64,7 @@ class ExpandedBody extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacings.m),
         ],
+        
 
         Button(
           text: buttonLabel,

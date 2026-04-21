@@ -147,8 +147,7 @@
         "features": [
           "Unlimited rides",
           "Priority support"
-        ],
-        "expireDate": "31/12/2026"
+        ]
       },
       {
         "id": "annual",
@@ -161,8 +160,7 @@
           "Unlimited rides",
           "Best savings",
           "Priority support"
-        ],
-        "expireDate": "31/12/2027"
+        ]
       }
     ]
 }

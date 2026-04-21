@@ -6,7 +6,7 @@ import '../../../utils/asyncvalue.dart';
 
 class SubscriptionViewModel extends ChangeNotifier {
   final SubscriptionRepository repository;
-  final UserPassState userPassState;
+  final SubscriptionState userPassState;
 
   SubscriptionViewModel({
     required this.repository,
@@ -27,7 +27,7 @@ class SubscriptionViewModel extends ChangeNotifier {
     notifyListeners();
   }
   bool isActive(SubscriptionModel plan) {
-    return userPassState.activePass?.id == plan.id;
+    return userPassState.activePass?.type == plan.type;
   }
 
 //fetch data from firebase
@@ -57,7 +57,7 @@ class SubscriptionViewModel extends ChangeNotifier {
       );
     }
 
-    if (active.id == plan.id) {
+    if (active.type == plan.type) {
       return SubscriptionAction(
         label: "CANCEL PLAN",
         style: PlanButtonStyle.accent,
@@ -77,7 +77,7 @@ class SubscriptionViewModel extends ChangeNotifier {
     final active = userPassState.activePass;
 
     // cancel if same plan
-    if (active != null && active.id == plan.id) {
+    if (active != null && active.type == plan.type) {
       userPassState.cancelPass();
       notifyListeners();
       return;

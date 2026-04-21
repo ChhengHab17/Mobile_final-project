@@ -12,7 +12,7 @@ import 'package:provider/provider.dart';
 
 List<InheritedProvider> get devProviders{
   return [
-    ChangeNotifierProvider<UserPassState>(create: (_) => UserPassState()),
+    ChangeNotifierProvider<SubscriptionState>(create: (_) => SubscriptionState()),
     ChangeNotifierProvider<BookingState>(create: (_) => BookingState()),
     Provider<StationRepository>(create: (_) => StationRepositoryFirebase()),
     Provider<BikeRepository>(create: (_) => BikeRepositoryFirebase()),

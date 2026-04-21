@@ -14,7 +14,7 @@ class SubscriptionScreen extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (_) => SubscriptionViewModel(
         repository: context.read<SubscriptionRepository>(),
-        userPassState: context.read<UserPassState>(),
+        userPassState: context.read<SubscriptionState>(),
       )..loadSubscriptions(),
 
       child: const SubscriptionContent(),
