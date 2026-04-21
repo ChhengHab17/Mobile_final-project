@@ -8,7 +8,7 @@ import 'package:provider/provider.dart';
 
 class PassSelectionView extends StatefulWidget {
   const PassSelectionView({super.key, required this.onPassSelected});
-  final Function(String) onPassSelected;
+  final ValueChanged<SubscriptionModel> onPassSelected;
 
   @override
   State<PassSelectionView> createState() => _PassSelectionViewState();
@@ -36,11 +36,11 @@ class _PassSelectionViewState extends State<PassSelectionView> {
     _plansFuture = subscriptionRepo.getSubscriptions();
   }
 
-  void _onSelectPlan(String planId) {
+  void _onSelectPlan(SubscriptionModel plan) {
     setState(() {
-      _selectedPlanId = planId;
+      _selectedPlanId = plan.type;
     });
-    widget.onPassSelected(planId);
+    widget.onPassSelected(plan);
   }
 
   @override
@@ -88,7 +88,7 @@ class _PassSelectionViewState extends State<PassSelectionView> {
           PassCard(
             plan: _singleTicketPlan,
             isSelected: _selectedPlanId == _singleTicketPlan.type,
-            onTap: () => _onSelectPlan(_singleTicketPlan.type),
+            onTap: () => _onSelectPlan(_singleTicketPlan),
           ),
           FutureBuilder<List<SubscriptionModel>>(
             future: _plansFuture,
@@ -120,7 +120,7 @@ class _PassSelectionViewState extends State<PassSelectionView> {
                       (plan) => PassCard(
                         plan: plan,
                         isSelected: _selectedPlanId == plan.type,
-                        onTap: () => _onSelectPlan(plan.type),
+                        onTap: () => _onSelectPlan(plan),
                       ),
                     )
                     .toList(),

@@ -2,6 +2,7 @@ import 'package:final_project/data/repositories/bike/bike_repository.dart';
 import 'package:final_project/model/bike.dart';
 import 'package:final_project/model/dock.dart';
 import 'package:final_project/model/station.dart';
+import 'package:final_project/model/subscription_plan.dart';
 import 'package:final_project/ui/utils/asyncvalue.dart';
 import 'package:flutter/material.dart';
 
@@ -11,7 +12,9 @@ class BikeDetailViewModel extends ChangeNotifier {
   final Dock dock;
 
   AsyncValue<Bike> bikeValue = AsyncValue.loading();
-  String? selectedPlanId;
+  SubscriptionModel? selectedPlan;
+
+  String? get selectedPlanId => selectedPlan?.type;
 
   Bike get currentBike => bikeValue.data!;
   
@@ -45,8 +48,8 @@ class BikeDetailViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void selectPlan(String planId) {
-    selectedPlanId = planId;
+  void selectPlan(SubscriptionModel plan) {
+    selectedPlan = plan;
     notifyListeners();
   }
 }
