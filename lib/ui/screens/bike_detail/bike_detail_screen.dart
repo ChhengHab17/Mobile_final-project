@@ -1,4 +1,5 @@
 import 'package:final_project/data/repositories/bike/bike_repository.dart';
+import 'package:final_project/data/repositories/subscription_plan/subscription_plan_repository.dart';
 import 'package:final_project/model/dock.dart';
 import 'package:final_project/model/station.dart';
 import 'package:final_project/ui/screens/bike_detail/view_model/bike_detail_view_model.dart';
@@ -22,7 +23,7 @@ class BikeDetailScreen extends StatelessWidget {
       create: (_) => BikeDetailViewModel(
         bikeRepository: context.read<BikeRepository>(),
         station: station,
-        dock: dock,
+        dock: dock, subscriptionRepository: context.read<SubscriptionRepository>(),
       ),
       child: Consumer<BikeDetailViewModel>(
         builder: (context, bikeDetailVm, child) {

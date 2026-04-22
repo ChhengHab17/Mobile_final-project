@@ -1,52 +1,28 @@
 import 'package:final_project/model/subscription_plan.dart';
-import 'package:final_project/data/repositories/subscription_plan/subscription_plan_repository.dart';
+import 'package:final_project/ui/screens/bike_detail/view_model/bike_detail_view_model.dart';
 import 'package:final_project/ui/screens/bike_detail/widgets/pass_card.dart';
 import 'package:final_project/ui/state/subscription_state.dart';
 import 'package:final_project/ui/theme/theme.dart';
+import 'package:final_project/ui/utils/asyncvalue.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class PassSelectionView extends StatefulWidget {
-  const PassSelectionView({super.key, required this.onPassSelected});
-  final ValueChanged<SubscriptionModel> onPassSelected;
-
-  @override
-  State<PassSelectionView> createState() => _PassSelectionViewState();
-}
-
-class _PassSelectionViewState extends State<PassSelectionView> {
-  late Future<List<SubscriptionModel>> _plansFuture;
-
-  static const SubscriptionModel _singleTicketPlan = SubscriptionModel(
-    type: 'single-ticket',
-    price: 2,
-    period: 'single',
-    planName: 'Single Ticket',
-    description: 'Use this bike once',
-    features: ['One-time ride'],
-  );
-
-  String? _selectedPlanId;
-
-  @override
-  void initState() {
-    super.initState();
-    final SubscriptionRepository subscriptionRepo = context
-        .read<SubscriptionRepository>();
-    _plansFuture = subscriptionRepo.getSubscriptions();
-  }
-
-  void _onSelectPlan(SubscriptionModel plan) {
-    setState(() {
-      _selectedPlanId = plan.type;
-    });
-    widget.onPassSelected(plan);
-  }
+class PassSelectionView extends StatelessWidget {
+  const PassSelectionView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final userPassState = context.watch<SubscriptionState>();
-    final hasActivePass = userPassState.hasActivePass;
+    final vm = context.watch<BikeDetailViewModel>();
+    final subscriptionState = context.watch<SubscriptionState>();
+    final bool hasActivePass = subscriptionState.hasActivePass;
+    final singlePlan = SubscriptionModel(
+      type: 'single-ticket',
+      price: 2,
+      period: 'single',
+      planName: 'Single Ticket',
+      description: 'Use this bike once',
+      features: ['One-time ride'],
+    );
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -60,6 +36,8 @@ class _PassSelectionViewState extends State<PassSelectionView> {
           ),
         ),
         const SizedBox(height: AppSpacings.s),
+
+        // Active pass banner
         if (hasActivePass)
           Container(
             padding: const EdgeInsets.all(AppSpacings.m),
@@ -74,7 +52,7 @@ class _PassSelectionViewState extends State<PassSelectionView> {
                 const SizedBox(width: AppSpacings.s),
                 Expanded(
                   child: Text(
-                    'You have an active pass: ${userPassState.activePass!.planName}',
+                    'Active pass: ${subscriptionState.activePass!.planName}',
                     style: AppTextStyles.label.copyWith(
                       color: AppColors.primary,
                       fontWeight: FontWeight.w600,
@@ -84,49 +62,47 @@ class _PassSelectionViewState extends State<PassSelectionView> {
               ],
             ),
           ),
+
+        // Plan cards when user has no active pass 
         if (!hasActivePass) ...[
           PassCard(
-            plan: _singleTicketPlan,
-            isSelected: _selectedPlanId == _singleTicketPlan.type,
-            onTap: () => _onSelectPlan(_singleTicketPlan),
+            plan: singlePlan,
+            isSelected: vm.selectedPlanId == singlePlan.type,
+            onTap: () => vm.selectPlan(singlePlan),
           ),
-          FutureBuilder<List<SubscriptionModel>>(
-            future: _plansFuture,
-             builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Padding(
-                  padding: EdgeInsets.symmetric(vertical: AppSpacings.s),
-                  child: Center(child: CircularProgressIndicator()),
-                );
-              }
+          const SizedBox(height: AppSpacings.s),
 
-              if (snapshot.hasError) {
-                return Padding(
-                  padding: const EdgeInsets.symmetric(vertical: AppSpacings.s),
-                   child: Text(
-                    'Failed to load plans: ${snapshot.error}',
-                    style: AppTextStyles.label.copyWith(
-                      color: AppColors.textSecondary,
-                    ),
-                  ),
-                );
-              }
+          switch (vm.plansValue.state) {
+            AsyncValueState.loading => const Padding(
+              padding: EdgeInsets.symmetric(vertical: AppSpacings.s),
+              child: Center(child: CircularProgressIndicator()),
+            ),
 
-              final List<SubscriptionModel> plans = snapshot.data ?? [];
+            AsyncValueState.error => Padding(
+              padding: const EdgeInsets.symmetric(vertical: AppSpacings.s),
+              child: Text(
+                'Failed to load plans: ${vm.plansValue.error}',
+                style: AppTextStyles.label.copyWith(
+                  color: AppColors.textSecondary,
+                ),
+              ),
+            ),
 
-              return Column(
-                children: plans
-                    .map(
-                      (plan) => PassCard(
+            AsyncValueState.success => Column(
+              children: vm.plansValue.data!
+                  .map(
+                    (SubscriptionModel plan) => Padding(
+                      padding: const EdgeInsets.only(bottom: AppSpacings.s),
+                      child: PassCard(
                         plan: plan,
-                        isSelected: _selectedPlanId == plan.type,
-                        onTap: () => _onSelectPlan(plan),
+                        isSelected: vm.selectedPlanId == plan.type,
+                        onTap: () => vm.selectPlan(plan),
                       ),
-                    )
-                    .toList(),
-              );
-            },
-          ),
+                    ),
+                  )
+                  .toList(),
+            ),
+          },
         ],
       ],
     );
