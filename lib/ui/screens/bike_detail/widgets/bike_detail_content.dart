@@ -133,11 +133,7 @@ class BikeDetailContent extends StatelessWidget {
                   ),
                   const SizedBox(height: AppSpacings.l),
                   if (!alreadyBooked)
-                    PassSelectionView(
-                      onPassSelected: (plan) {
-                        bikeDetailVm.selectPlan(plan);
-                      },
-                    ),
+                    PassSelectionView(),
                 ],
               ),
             ),
@@ -154,12 +150,15 @@ class BikeDetailContent extends StatelessWidget {
               width: double.infinity,
               child: Button(
                 text: alreadyBooked ? 'Already Booked a Bike' : 'Book This Bike',
-                onPressed: (alreadyBooked || (!hasActivePass && bikeDetailVm.selectedPlanId == null)) ? () {} : () async {
+                onPressed: () async {
                   final selectedPlan = bikeDetailVm.selectedPlan;
+
                   if (!hasActivePass && selectedPlan != null && selectedPlan.period != 'single') {
                     context.read<SubscriptionState>().setActivePass(selectedPlan);
                   }
-                  context.read<BookingState>().bookBike(bike.id, bikeDetailVm.station.id);
+
+                  context.read<BookingState>().bookBike(bike.id,bikeDetailVm.station.id,);
+
                   await showDialog(
                     context: context,
                     builder: (ctx) => AlertDialog(
@@ -173,6 +172,7 @@ class BikeDetailContent extends StatelessWidget {
                       ],
                     ),
                   );
+
                   if (context.mounted) {
                     Navigator.pop(context);
                   }
