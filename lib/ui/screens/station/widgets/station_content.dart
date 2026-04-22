@@ -2,14 +2,19 @@ import 'package:final_project/model/station.dart';
 import 'package:final_project/ui/screens/bike_detail/bike_detail_screen.dart';
 import 'package:final_project/ui/screens/station/view_model/station_view_model.dart';
 import 'package:final_project/ui/screens/station/widgets/bike_tile.dart';
+import 'package:final_project/ui/theme/theme.dart';
 import 'package:final_project/ui/utils/asyncvalue.dart';
 import 'package:final_project/ui/state/booking_state.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class StationContent extends StatelessWidget {
-  const StationContent({super.key, required this.stationVm});
+  const StationContent({
+    super.key,
+    required this.stationVm,
+    required this.bookingState,
+  });
   final StationViewModel stationVm;
+  final BookingState bookingState;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +27,7 @@ class StationContent extends StatelessWidget {
         return Scaffold(
           appBar: AppBar(
             title: const Text('Station Info'),
-            backgroundColor: Colors.white,
+            backgroundColor: AppColors.textWhite,
             surfaceTintColor: Colors.transparent,
             scrolledUnderElevation: 0,
             elevation: 0,
@@ -31,8 +36,7 @@ class StationContent extends StatelessWidget {
         );
       case AsyncValueState.success:
         final Station stationData = stationVm.currentStation;
-        final bookingState = context.watch<BookingState>();
-        
+
         final validDocks = stationData.docks.where((dock) {
           return dock.bikeId != null && dock.bikeId != bookingState.bookedBikeId;
         }).toList();
@@ -41,13 +45,13 @@ class StationContent extends StatelessWidget {
         final int availableParking = stationData.docks.length - availableBikes;
 
         return Scaffold(
-          backgroundColor: Colors.white,
+          backgroundColor: AppColors.textWhite,
           appBar: AppBar(
             elevation: 0,
             scrolledUnderElevation: 0,
             surfaceTintColor: Colors.transparent,
             title: const Text('Station Info'),
-            backgroundColor: Colors.white,
+            backgroundColor: AppColors.textWhite,
             bottom: PreferredSize(
               preferredSize: const Size.fromHeight(100),
               child: Padding(
@@ -85,13 +89,13 @@ class StationContent extends StatelessWidget {
                                   '$availableBikes',
                                   style: TextStyle(
                                     fontSize: 14,
-                                    color: Colors.grey[800],
+                                    color: AppColors.textSecondary,
                                   ),
                                 ),
                                 const SizedBox(width: 4),
                                 Icon(
                                   Icons.pedal_bike_rounded,
-                                  color: Colors.black,
+                                  color: AppColors.textPrimary,
                                   size: 16,
                                 ),
                               ],
@@ -103,13 +107,13 @@ class StationContent extends StatelessWidget {
                                   '$availableParking',
                                   style: TextStyle(
                                     fontSize: 14,
-                                    color: Colors.grey[800],
+                                    color: AppColors.textSecondary,
                                   ),
                                 ),
                                 const SizedBox(width: 4),
                                 Icon(
                                   Icons.local_parking_rounded,
-                                  color: Colors.black,
+                                  color: AppColors.textPrimary,
                                   size: 16,
                                 ),
                               ],

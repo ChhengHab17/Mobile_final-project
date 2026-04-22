@@ -1,4 +1,5 @@
 import 'package:final_project/model/dock.dart';
+import 'package:final_project/ui/theme/theme.dart';
 import 'package:flutter/material.dart';
 
 class BikeTile extends StatelessWidget {
@@ -27,8 +28,8 @@ class BikeTile extends StatelessWidget {
               fit: BoxFit.scaleDown,
               child: Text(
                 dockId,
-                style: const TextStyle(
-                  color: Colors.white,
+                style: TextStyle(
+                  color: AppColors.textWhite,
                   fontSize: 12,
                   fontWeight: FontWeight.w700,
                 ),
@@ -37,16 +38,14 @@ class BikeTile extends StatelessWidget {
           ],
         ),
       ),
-      title: const Align(
+      title: Align(
         alignment: Alignment.centerLeft,
-        child: Icon(Icons.pedal_bike_rounded, color: Colors.black, size: 34),
+        child: Icon(Icons.pedal_bike_rounded, color: AppColors.textPrimary, size: 34),
       ),
       trailing: Text(
         dock.bikeId ?? '-',
-        style: const TextStyle(
-          color: Colors.black,
-          fontSize: 14,
-          fontWeight: FontWeight.w500,
+        style: AppTextStyles.button.copyWith(
+          color: AppColors.textPrimary,
         ),
       ),
     );
