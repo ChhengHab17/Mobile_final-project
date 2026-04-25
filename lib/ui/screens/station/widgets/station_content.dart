@@ -35,14 +35,10 @@ class StationContent extends StatelessWidget {
           body: Center(child: Text('Error: ${station.error}')),
         );
       case AsyncValueState.success:
-        final Station stationData = stationVm.currentStation;
-
-        final validDocks = stationData.docks.where((dock) {
-          return dock.bikeId != null && dock.bikeId != bookingState.bookedBikeId;
-        }).toList();
-
+        final Station stationData = stationVm.stationValue.data!;
+        final validDocks = stationVm.getValidDocks(bookingState.bookedBikeId);
         final int availableBikes = validDocks.length;
-        final int availableParking = stationData.docks.length - availableBikes;
+        final int availableParking = stationVm.availableParking;
 
         return Scaffold(
           backgroundColor: AppColors.textWhite,

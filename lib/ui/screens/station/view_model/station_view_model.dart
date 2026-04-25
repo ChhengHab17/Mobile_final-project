@@ -1,4 +1,5 @@
 import 'package:final_project/data/repositories/station/station_repository.dart';
+import 'package:final_project/model/dock.dart';
 import 'package:final_project/model/station.dart';
 import 'package:final_project/ui/utils/asyncvalue.dart';
 import 'package:flutter/material.dart';
@@ -9,10 +10,8 @@ class StationViewModel extends ChangeNotifier {
 
   AsyncValue<Station> stationValue = AsyncValue.loading();
 
-  Station get currentStation => stationValue.data!;
-  int get availableBikes => currentStation.availableBikes;
   int get availableParking =>
-      currentStation.docks.where((dock) => dock.bikeId == null).length;
+      stationValue.data!.docks.where((dock) => dock.bikeId == null).length;
   
 
   StationViewModel({required this.stationRepository, required this.stationId}) {
@@ -34,5 +33,11 @@ class StationViewModel extends ChangeNotifier {
       stationValue = AsyncValue.error(e);
     }
     notifyListeners();
+  }
+
+  List<Dock> getValidDocks(String? bookedBikeId) {
+    return stationValue.data!.docks.where((dock) {
+      return dock.bikeId != null && dock.bikeId != bookedBikeId;
+    }).toList();
   }
 }

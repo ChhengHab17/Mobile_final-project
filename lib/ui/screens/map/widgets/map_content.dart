@@ -41,9 +41,10 @@ class MapContent extends StatelessWidget {
                 markers: stations.data!
                     .map(
                       (station) {
-                        final validDocks = station.docks.where((dock) {
-                          return dock.bikeId != null && dock.bikeId != bookingState.bookedBikeId;
-                        }).toList();
+                        final validDocks = mapVm.getValidDocks(
+                          station,
+                          bookingState.bookedBikeId,
+                        );
                         return buildStationMarker(
                           station.latitude,
                           station.longitude,

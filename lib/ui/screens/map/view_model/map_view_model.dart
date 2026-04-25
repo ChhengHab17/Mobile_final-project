@@ -1,4 +1,5 @@
 import 'package:final_project/data/repositories/station/station_repository.dart';
+import 'package:final_project/model/dock.dart';
 import 'package:final_project/model/station.dart';
 import 'package:final_project/ui/utils/asyncvalue.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +13,7 @@ class MapViewModel extends ChangeNotifier{
     _init();
   }
 
-  void _init() async {
+  void _init() {
     fetchStations();
   }
   
@@ -27,6 +28,12 @@ class MapViewModel extends ChangeNotifier{
       stationsValue = AsyncValue.error(e);
     }
     notifyListeners();
+  }
+
+  List<Dock> getValidDocks(Station station, String? bookedBikeId) {
+    return station.docks.where((dock) {
+      return dock.bikeId != null && dock.bikeId != bookedBikeId;
+    }).toList();
   }
   
 }
